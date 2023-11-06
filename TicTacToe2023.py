@@ -10,10 +10,10 @@ def main():
     p2icon = "x"
     grid = [[i * 3 + j for j in range (0,3)] for i in range (0,3)]
     # ADD LATER intro(grid)
-
     grid = [[" " for j in range (0,3)] for i in range (0,3)]
+    printGrid(grid)
     while (not finished):
-        if (turn == 1) :
+        if (turn % 2 == 1) :
             icon = p1icon
         else: 
             icon = p2icon
