@@ -9,6 +9,7 @@ def main():
     turn = 1 # odd numbered turns are p1, even are p2
     p1icon = "o"
     p2icon = "x"
+    currPlayer = 1
 
     # creating a 3x3 grid for the game
     grid = [[i * 3 + j for j in range (0,3)] for i in range (0,3)]
@@ -17,13 +18,14 @@ def main():
     #introduction for the players 
     intro(grid)
     grid = [[" " for j in range (0,3)] for i in range (0,3)]
-    printGrid(grid)
     while (not finished):
         if (turn % 2 == 1) :
-            icon = p1icon    
+            icon = p1icon 
+            currPlayer = 1   
         else: 
             icon = p2icon
-        print("Player {}, your turn.".format(turn % 2))
+            currPlayer = 2
+        print("Player {}, your turn.".format(currPlayer))
         grid = takeTurn(grid,icon)
         if (checkRow(grid) or checkCol(grid) or checkDiag(grid)) :
             finished = True
@@ -39,17 +41,30 @@ def main():
             printGrid(grid)
             
     print("Thanks for playing!")
+    exit(); 
             
     
 
 def intro(grid) :
     print("Hello there! Welcome to tic tac toe")
     player = -1
-    while (player < 1) :
-        player = input("How many players? ")
-        if (player != 1 | player != 2) :
-            print("Please choose only one or two players.")
+    correctType = False
+    while (not correctType) :
+        correctType = True
+        try:
+            player = int(input("How many players? "))
+        except (ValueError): 
+            correctType = False
+            print ("Please try again, choose either 1 or 2.")
+        if (player == 1 or player == 2) :
+            correctType = True
+            print("Let's get started!")
+        else: 
+            correctType = False
+            player = -1
+            print("Please choose only 1 or 2.")
     print("Here is the grid, and the corresponding number for each square!")
+    printGrid (createLegend(grid))
 
 
 
@@ -114,7 +129,7 @@ def checkTie(grid) :
 def createLegend(grid) :
     for i in range (0,3) :
         for j in range (0,3) : 
-            grid[i][j] = i * 3 + j
+            grid[i][j] = str(i * 3 + j)
     return grid
 
             
