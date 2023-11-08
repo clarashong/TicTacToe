@@ -15,13 +15,22 @@ def main():
     while (not finished):
         if (turn % 2 == 1) :
             icon = p1icon
+            print("Player {}, your turn.".format(turn % 2))
+
+
         else: 
             icon = p2icon
         grid = takeTurn(grid,icon)
-        if (checkRow(grid) and checkCol(grid)) :
+        if (checkRow(grid) or checkCol(grid) or checkDiag(grid)) :
             finished = True
-        turn += 1
-        printGrid(grid)
+            printGrid(grid)
+            print("We have a winner!")
+        else :
+            turn += 1
+            printGrid(grid)
+            
+    print("Thanks for playing!")
+            
     
 
 def intro(grid) :
@@ -73,6 +82,15 @@ def checkCol(grid) :
     for i in range (0,3): 
         starting = grid[0][i]
         if (grid[1][i] == starting and grid[2][i] == starting and starting != " "): 
+            return True
+    return False
+
+def checkDiag(grid) :
+    starting = grid[0][0]
+    if (grid[1][1] == starting and grid[2][2] == starting and starting != " "): 
+            return True
+    starting = grid[0][2]
+    if (grid[1][1] == starting and grid[2][0] == starting and starting != " "): 
             return True
     return False
 
