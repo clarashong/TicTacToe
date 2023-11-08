@@ -19,6 +19,8 @@ def main():
     intro(grid)
     grid = [[" " for j in range (0,3)] for i in range (0,3)]
     while (not finished):
+        # turn = odd, player 1
+        # turn = even, player 2
         if (turn % 2 == 1) :
             icon = p1icon 
             currPlayer = 1   
@@ -26,7 +28,9 @@ def main():
             icon = p2icon
             currPlayer = 2
         print("Player {}, your turn.".format(currPlayer))
+
         grid = takeTurn(grid,icon)
+        # check to see if anyone has won, otherwise, continue on
         if (checkRow(grid) or checkCol(grid) or checkDiag(grid)) :
             finished = True
             printGrid(grid)
@@ -43,8 +47,6 @@ def main():
     print("Thanks for playing!")
     exit(); 
             
-    
-
 def intro(grid) :
     print("Hello there! Welcome to tic tac toe")
     player = -1
@@ -86,7 +88,7 @@ def takeTurn(grid, icon):
         while (not correctType) :
             correctType = True
             try:
-                spot = int(input("Give a grid coordinate number: "))
+                spot = int(input("Choose a grid number: "))
             except (ValueError): 
                 correctType = False
 
@@ -95,6 +97,9 @@ def takeTurn(grid, icon):
                 valid = True
                 grid[spot // 3][spot % 3] = icon
                 return grid
+            else:
+                valid = False
+                print("Sorry, that space is already taken.")
         
 def checkRow(grid) :
     for i in range (0,3): 
@@ -131,10 +136,6 @@ def createLegend(grid) :
         for j in range (0,3) : 
             grid[i][j] = str(i * 3 + j)
     return grid
-
-            
-            
-    
 
 if __name__ == "__main__":
     main()
