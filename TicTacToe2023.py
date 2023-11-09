@@ -2,6 +2,7 @@
 # TicTacToe - Clara Hong 
 # Start: November 5 2023
 # ******************************
+import random
 
 def main():
     # starting variables
@@ -115,6 +116,20 @@ def takeTurn(grid, icon):
             else:
                 valid = False
                 print("Sorry, that space is already taken.")
+
+# chooseSquare(grid,icon) chooses a random tile in the grid for the computer to make their play
+# chooseSquare: 2d list, String -> 2d list
+def chooseSquare(grid, icon) : 
+    listNum = [0,1,2,3,4,5,6,7,8] 
+    valid = False
+    while (valid) : 
+        num = random.choice(listNum)
+        if (grid[num // 3][num % 3] == " ") : 
+            valid = True
+            grid[num // 3][num % 3] = icon
+            return grid
+    print("The computer chose {}".format(num))
+
 
 # checkRow(grid) checks whether a row has three of the same icons (not spaces)
 # checkRow: 2d list -> Boolean
