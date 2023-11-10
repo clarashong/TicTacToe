@@ -3,6 +3,7 @@
 # Start: November 5 2023
 # ******************************
 import random
+numPlayers = 1
 
 def main():
     # starting variables
@@ -32,8 +33,10 @@ def main():
             icon = p2icon
             currPlayer = 2
         print("Player {}, your turn.".format(currPlayer))
-
-        grid = takeTurn(grid,icon)
+        if (numPlayers == 1 and currPlayer == 2) : 
+            chooseSquare(grid, icon)
+        else: 
+            takeTurn(grid, icon)
 
         # check to see if anyone has won, otherwise, continue on
         if (checkRow(grid) or checkCol(grid) or checkDiag(grid)) :
@@ -70,6 +73,7 @@ def intro(grid) :
             print ("Please try again, choose either 1 or 2.")
         if (player == 1 or player == 2) :
             correctType = True
+            numPlayers = player
             print("Let's get started!")
         else: 
             correctType = False
@@ -122,13 +126,14 @@ def takeTurn(grid, icon):
 def chooseSquare(grid, icon) : 
     listNum = [0,1,2,3,4,5,6,7,8] 
     valid = False
-    while (valid) : 
+    num = 0
+    while (not valid) : 
         num = random.choice(listNum)
         if (grid[num // 3][num % 3] == " ") : 
             valid = True
             grid[num // 3][num % 3] = icon
-            return grid
     print("The computer chose {}".format(num))
+    return grid
 
 
 # checkRow(grid) checks whether a row has three of the same icons (not spaces)
